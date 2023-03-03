@@ -8,6 +8,12 @@
 #include <Python.h>
 #include "PythonConnector.h"
 
+/// <summary>
+/// Sort squares
+/// </summary>
+/// <param name="lhs"></param>
+/// <param name="rhs"></param>
+/// <returns></returns>
 bool sortSquares(const cv::Rect& lhs, const cv::Rect& rhs)
 {
 	if (abs(lhs.y - rhs.y) < 20)
@@ -17,6 +23,11 @@ bool sortSquares(const cv::Rect& lhs, const cv::Rect& rhs)
 	return lhs.y < rhs.y;
 }
 
+/// <summary>
+/// Detect lines on img
+/// </summary>
+/// <param name="src">Source image</param>
+/// <returns>Image with detected lines</returns>
 cv::Mat detectLines(cv::Mat& src)
 {
 	std::vector<cv::Vec4i> linesP;
@@ -32,6 +43,11 @@ cv::Mat detectLines(cv::Mat& src)
 	return result;
 }
 
+/// <summary>
+/// Detect sudoku number squares ( and return them if their number is equal to number of sudoku squares(81))
+/// </summary>
+/// <param name="src">Source image</param>
+/// <returns>Return rectangle shapes </returns>
 std::optional<std::vector<cv::Rect>> detectSudokuContours(cv::Mat& src)
 {
 	std::vector<std::vector<cv::Point>> contours;
@@ -81,6 +97,7 @@ int main(int argc, char* argv[]) {
 
 	while (true)
 	{
+		// Handle keyboard events
 		auto keyPressed = cv::waitKey(15);
 		if (keyPressed == 'q')
 		{
@@ -103,7 +120,6 @@ int main(int argc, char* argv[]) {
 		cv::adaptiveThreshold(matMediana, matThreshold, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C, cv::THRESH_BINARY_INV, 11, 2);
 		cv::erode(matThreshold, matOpen, element);
 		cv::dilate(matOpen, matOpen, element);
-
 		// Detect number squars location on image
 		matLines = detectLines(matOpen);
 		auto boundingBoxes = detectSudokuContours(matLines);
@@ -120,6 +136,7 @@ int main(int argc, char* argv[]) {
 						cv::Mat roi{ matOpen((*boundingBoxes)[i * 9 + j]) };
 						cv::resize(roi, roi, boxSize);
 						cv::imwrite("Digit.png", roi);
+						// Fill sudoku table from predictions
 						sudokuTabel[i][j] = connector.predictDigit();
 					}
 				}
@@ -127,6 +144,7 @@ int main(int argc, char* argv[]) {
 			}
 			else
 			{
+				// Draw detected squares and predicted values
 				for (int i = 0; i < 9; i++)
 				{
 					for (int j = 0; j < 9; j++)
@@ -146,8 +164,6 @@ int main(int argc, char* argv[]) {
 		imshow("Threshold", matThreshold);
 		imshow("Open", matOpen);
 		imshow("Result", matLines);
-
-
 	}
     return 0;
 }
