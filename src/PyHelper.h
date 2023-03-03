@@ -7,7 +7,7 @@ public:
 	CPyInstance()
 	{
 		//You can check required paths by starting certain python script in pycharm. On the top screen of terminal you will see all paths that were used to start script. Copy it and add to this path. Also you must add path to folder(in this its relase)
-		Py_SetPath(L"C:\\Users\\SSSS\\miniconda3\\python38.zip;C:\\Users\\SSSS\\miniconda3\\lib;C:\\Users\\SSSS\\AppData\\miniconda3\\DLLs;F:\\Cleared Projects\\AI\\SudokuSolverWebCam\\SFML-MovingWindowTemplate\\python;C:\\Users\\SSSS\\miniconda3\\envs\\tensorflow\\lib\\site-packages;C:\\Users\\SSSS\\AppData\\Roaming\\Python\\Python38\\site-packages;C:\\Users\\SSSS\\miniconda3\\envs\\tensorflow;C:\\Users\\SSSS\\miniconda3\\envs\\tensorflow\\lib;C:\\Users\\SSSS\\miniconda3\\envs\\tensorflow\\DLLs");
+		Py_SetPath(L"C:\\Users\\sss\\anaconda3\\lib;C:\\Projects\\SudokuSolverFromWebCam\\src\\python;C:\\Users\\sss\\anaconda3\\DLLs;C:\\Users\\sss\\anaconda3\\lib\\site-packages");
 		Py_Initialize();
 	}
 	~CPyInstance()
@@ -15,7 +15,6 @@ public:
 		Py_Finalize();
 	}
 };
-
 
 class CPyObject
 {

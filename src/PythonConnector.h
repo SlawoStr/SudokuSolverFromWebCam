@@ -13,5 +13,5 @@ private:
 	CPyObject object;
 	bool ErrorCondition;
 public:
-	int getDigit(int number);
+	int predictDigit();
 };

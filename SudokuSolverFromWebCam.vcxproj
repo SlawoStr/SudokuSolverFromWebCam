@@ -104,13 +104,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Libraries\OpenCV\opencv\build\include;C:\Users\sss\anaconda3\pkgs\python-3.9.16-h6244533_0\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Libraries\OpenCV\opencv\build\include;C:\Users\sss\anaconda3\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Libraries\OpenCV\opencv\build\x64\vc16\lib;C:\Users\sss\anaconda3\pkgs\python-3.9.16-h6244533_0\libs</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Libraries\OpenCV\opencv\build\x64\vc16\lib;C:\Users\sss\anaconda3\libs</AdditionalLibraryDirectories>
       <AdditionalDependencies>opencv_world470d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -122,7 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Libraries\OpenCV\opencv\build\include;C:\Users\sss\anaconda3\pkgs\python-3.9.16-h6244533_0\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Libraries\OpenCV\opencv\build\include;C:\Users\sss\anaconda3\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -130,8 +130,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Libraries\OpenCV\opencv\build\x64\vc16\lib;C:\Users\sss\anaconda3\pkgs\python-3.9.16-h6244533_0\libs</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opencv_world470.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Libraries\OpenCV\opencv\build\x64\vc16\lib;C:\Users\sss\anaconda3\libs</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opencv_world470.lib;python39.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

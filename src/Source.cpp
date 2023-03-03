@@ -5,6 +5,7 @@
 #include <opencv2/imgproc.hpp>
 #include <vector>
 #include <optional>
+#include <Python.h>
 #include "PythonConnector.h"
 
 bool sortSquares(const cv::Rect& lhs, const cv::Rect& rhs)
@@ -65,7 +66,8 @@ std::optional<std::vector<cv::Rect>> detectSudokuContours(cv::Mat& src)
 	return std::nullopt;
 }
 
-int main() {
+int main(int argc, char* argv[]) {
+
 	// Video from camera
 	cv::VideoCapture cap(0);
 	// Parameters
@@ -73,9 +75,21 @@ int main() {
 	int erosionSize{ 1 };
 	cv::Mat matFrame, matGray, matMediana, matThreshold, matOpen, matLines;
 	cv::Mat element{ cv::getStructuringElement(cv::MORPH_RECT, cv::Size(2 * erosionSize + 1, 2 * erosionSize + 1), cv::Point(erosionSize, erosionSize)) };
+	PythonConnector connector;
+	bool isFinished{ false };
+	int sudokuTabel[9][9];
 
-	while (cv::waitKey(15) != 'q')
+	while (true)
 	{
+		auto keyPressed = cv::waitKey(15);
+		if (keyPressed == 'q')
+		{
+			break;
+		}
+		else if (keyPressed == 'r')
+		{
+			isFinished = false;
+		}
 		// Error couldnt take a frame from camera
 		cap >> matFrame;
 		if (matFrame.empty())
@@ -95,25 +109,45 @@ int main() {
 		auto boundingBoxes = detectSudokuContours(matLines);
 		if (boundingBoxes)
 		{
-			cv::Size boxSize{ 28,28 };
-			for (int i = 0; i < 9; i++)
+			if (!isFinished)
 			{
-				for (int j = 0; j < 9; j++)
+				cv::Size boxSize{ 28,28 };
+				for (int i = 0; i < 9; i++)
 				{
-					// Prepare detected box for ml model (28x28)
-					cv::Mat roi{ matGray((*boundingBoxes)[i * 9 + j]) };
-					cv::resize(roi, roi, boxSize);
-					cv::imwrite("Digit.png", roi);
+					for (int j = 0; j < 9; j++)
+					{
+						// Prepare detected box for ml model (28x28)
+						cv::Mat roi{ matOpen((*boundingBoxes)[i * 9 + j]) };
+						cv::resize(roi, roi, boxSize);
+						cv::imwrite("Digit.png", roi);
+						sudokuTabel[i][j] = connector.predictDigit();
+					}
+				}
+				isFinished = true;
+			}
+			else
+			{
+				for (int i = 0; i < 9; i++)
+				{
+					for (int j = 0; j < 9; j++)
+					{
+						cv::Rect rect = (*boundingBoxes)[i * 9 + j];
+						cv::rectangle(matFrame, rect, cv::Scalar(255, 0, 255));
+						std::string result = std::to_string(sudokuTabel[i][j]);
+						cv::putText(matFrame, result, cv::Point(rect.x + rect.width / 3, rect.y + rect.height), cv::FONT_HERSHEY_COMPLEX, 1.5, cv::Scalar(36, 255, 12));
+					}
 				}
 			}
 		}
-		// Print result of detection
+		// Detection steps visualisation
 		imshow("Oryginal", matFrame);
 		imshow("Gray", matGray);
 		imshow("Mediana", matMediana);
 		imshow("Threshold", matThreshold);
 		imshow("Open", matOpen);
 		imshow("Result", matLines);
+
+
 	}
     return 0;
 }
