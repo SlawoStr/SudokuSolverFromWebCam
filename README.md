@@ -13,13 +13,13 @@ These operations are followed by the detection of lines separating squares with 
 Detected sudoku example:   
 ![Oryginal](https://github.com/SlawoStr/SudokuSolverFromWebCam/blob/master/Results/Gray.png)
 
-Image after thresholding and morphology operations:
+Image after thresholding and morphology operations:    
 ![Oryginal](https://github.com/SlawoStr/SudokuSolverFromWebCam/blob/master/Results/Open.png)
 
-Image after contour detection and prediction
+Image after contour detection and prediction:    
 ![Oryginal](https://github.com/SlawoStr/SudokuSolverFromWebCam/blob/master/Results/PredictionResultFinal.png)
 
-Final results after sudoku solver algorithm
+Final results after sudoku solver algorithm:    
 ![Oryginal](https://github.com/SlawoStr/SudokuSolverFromWebCam/blob/master/Results/SolverResultFinal.png)
 
 
